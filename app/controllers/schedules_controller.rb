@@ -4,6 +4,7 @@ class SchedulesController < ApplicationController
   # GET /schedule/
   # GET /schedule.xml
   def show
+    response.headers['Cache-Control'] = 'public, max-age=300'
     @schedule = Schedule.new([
      {:category => "Conference day 1", :date => Date.new(2011,07,14)},
      {:category => "Conference day 2", :date => Date.new(2011,07,15)}])
