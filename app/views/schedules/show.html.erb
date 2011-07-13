@@ -16,7 +16,10 @@
       <%= header "#{day[:category]} - #{day[:date].strftime('%A %dth')}" %>
       <ul data-role="listview">
       <% @schedule.slots_on_date(day[:date]).each do |slot| %>
-        <li><%= "#{slot.starts_at.strftime('%H:%M')} - #{slot.ends_at.strftime('%H:%M')}: #{slot.header_string}" %></li>
+        <li>
+          <span><%= "#{slot.starts_at.strftime('%H:%M')} - #{slot.ends_at.strftime('%H:%M')}" %></span>
+          <%= slot.header_string %>
+        </li>
       <% end %>
       </ul>
       <%= render 'layouts/footer' %>
