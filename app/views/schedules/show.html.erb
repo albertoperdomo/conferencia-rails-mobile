@@ -16,19 +16,11 @@
       <%= header "#{day[:category]} - #{day[:date].strftime('%A %dth')}" %>
       <ul data-role="listview">
       <% @schedule.slots_on_date(day[:date]).each do |slot| %>
-        <li><%= local_link_to_time_slot slot %></li>
+        <li><%= "#{slot.starts_at.strftime('%H:%M')} - #{slot.ends_at.strftime('%H:%M')}: #{slot.header_string}" %></li>
       <% end %>
       </ul>
       <%= render 'layouts/footer' %>
     </div>
-
-    <% @schedule.slots_on_date(day[:date]).each do |slot| %>
-      <div data-role="page" id="slot_<%= slot.id %>" data-title="<%= slot.title %>">
-        <%= header slot.header_string %>
-        <h2>When?</h2>
-        <span><%= slot.starts_at.strftime("%a %d") %> at <%= slot.starts_at.strftime("%H:%M") %> - <%= slot.ends_at.strftime("%H:%M") %></span>
-      </div>
-    <% end %>
   <% end %>
 
 <% end %>
