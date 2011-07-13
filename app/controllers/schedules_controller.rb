@@ -1,4 +1,5 @@
 class SchedulesController < ApplicationController
+  layout "mobile"
 
   # GET /schedule/
   # GET /schedule.xml
