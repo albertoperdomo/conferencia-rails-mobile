@@ -1,0 +1,34 @@
+<% set_title "Schedule" %>
+<% content_for :multipage do %>
+
+  <div data-role="page" id="main" data-title="Conferencia Rails 2011">
+    <%= header "Conferencia Rails 2011" %>
+    <h2>Sessions</h2>
+    <ul data-role="listview">
+      <% @schedule.data.each do |day| %>
+        <li><%= link_to "#{day[:category]} - #{day[:date].strftime('%A %dth')}", "##{day[:date].strftime('%A').underscore}", :class => @schedule.slots_on_date(day[:date]).pending.size.zero? ? 'finished' : nil %><span class="ui-li-count"><%= @schedule.slots_on_date(day[:date]).size %></span></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% @schedule.data.each do |day| %>
+    <div data-role="page" id="<%= day[:date].strftime("%A").underscore %>"  data-title="<%= "#{day[:category]} - #{day[:date].strftime('%A %dth')}" %>">
+      <%= header "#{day[:category]} - #{day[:date].strftime('%A %dth')}" %>
+      <ul data-role="listview">
+      <% @schedule.slots_on_date(day[:date]).each do |slot| %>
+        <li><%= local_link_to_time_slot slot %></li>
+      <% end %>
+      </ul>
+      <%= render 'layouts/footer' %>
+    </div>
+
+    <% @schedule.slots_on_date(day[:date]).each do |slot| %>
+      <div data-role="page" id="slot_<%= slot.id %>" data-title="<%= slot.title %>">
+        <%= header slot.header_string %>
+        <h2>When?</h2>
+        <span><%= slot.starts_at.strftime("%a %d") %> at <%= slot.starts_at.strftime("%H:%M") %> - <%= slot.ends_at.strftime("%H:%M") %></span>
+      </div>
+    <% end %>
+  <% end %>
+
+<% end %>

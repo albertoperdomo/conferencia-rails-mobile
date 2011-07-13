@@ -1,4 +1,16 @@
 ConferenciarailsMobile::Application.routes.draw do
+  offline = Rack::Offline.configure do
+    cache [ "http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css",
+            "http://code.jquery.com/mobile/1.0b1/images/icons-18-white.png",
+            "http://code.jquery.com/mobile/1.0b1/images/ajax-loader.png",
+            "http://code.jquery.com/jquery-1.6.1.min.js",
+            "http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js",
+            "favicon.ico"]
+    network "*"
+  end
+
+  match "/offline.appcache" => offline
+
   devise_for :users
 
   # The priority is based upon order of creation:
@@ -50,7 +62,7 @@ ConferenciarailsMobile::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  root :to => "schedules#show"
 
   # See how all your routes lay out with "rake routes"
 
